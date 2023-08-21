@@ -11,6 +11,79 @@
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
+Project Task Management Web Application
+Laravel 10 Vue JS API 
+Redmine
+
+
+Steps to be followed
+===============================
+- Clone project code zip file from Repository
+- Run command `Composer install`
+- Run command `./vendor/bin/sail up`
+- Run command `npm install`
+- Run command `cp env.example .env`
+- Run command `php artisan key:generate`
+- Create mysql db / Set database mysql credentials in .env file
+- Check the db connction using laravel tinker
+- Do the require settings for enable rest api settings and generate access key and api url in redmine panel
+- Set redmine api url and seceret access key & credentials in .env file for rest api 
+- Extra feature:: Set database redmine mysql dev/stage server credentials in .env file if you have any dev/stag server
+- You can switch databse between using a local database as `mysql` or `redmine` via env variable `DB_CONNECTION`
+- Add VITE_API_URL=http://127.0.0.1/api in .env file for laravel vue js communication talk to each other
+- Run command `php artisan migrate --seed`
+- Run command `php artisan serve` if 
+- Run command `npm run dev`
+- Login into authentication based web application http://127.0.0.1:8000/login
+
+# Features
+- Switch database local mysql and redmine
+- Pagination
+- Quick searching
+- Database design 
+- Redmine API
+- Docker
+- Anonymous search filter feature without page reloding  
+
+# Used Tech Stack:: 
+• PHP
+• MySQL
+• Laravel 10 package used sail
+• Vue.js vue axios for api call
+• Docker dev environment 
+• Redmine project & task management tool REST Api 
+
+API::Redmine 
+Create Issue
+Get Issue
+Delete Issue
+
+Note::
+============
+My laravel task management application is for manage task/issues web application on daily bases.... 
+
+Credentials for Admin / Register yourself through http://127.0.0.1:8000/login
+============================
+email = admin@gmail.com,
+password = admin123
+Implement a main page with a task search filter (without page reloading) and display the found tasks with pagination.
+throgh vue js and local  mysql
+
+
+php artisan serve
+
+1. Set up Laravel and Docker through Laravel Sail package and add api url in .env file.
+2. Design a database for storing tasks as an alternative to Redmine:
+   (provide the ability to switch between using a local database or Redmine via env variables).
+   Use examples of fields from Redmine tables (Issue, Project, Company).
+3. Do not use third-party packages to work with Laravel-Redmine (only via API).
+
+4. You can use Redmine running in Docker or create a test account at https://www.redmine.org/.
+5. Implement a main page with a task search filter (without page reloading) and display the found tasks with pagination.
+6. Implement task deletion.
+7. Implement task creation.
+
+
 - [Simple, fast routing engine](https://laravel.com/docs/routing).
 - [Powerful dependency injection container](https://laravel.com/docs/container).
 - Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.

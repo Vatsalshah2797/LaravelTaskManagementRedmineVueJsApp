@@ -59,6 +59,16 @@ class TaskController extends Controller
             $tasks = $tasks->paginate($perPage);
         } elseif ($backend === 'redmine') {
             $tasks = $this->fetchTasksFromRedmineUsingGuzzle();
+            foreach ($tasks as $key => $task) {
+                $task = $task-->with(
+                    [
+                        'user:id,name',
+                        'project:id,name'
+                    ]
+                );
+
+                $tasks[] = $task;
+            }
         }
 
         return response()->json([
@@ -72,13 +82,18 @@ class TaskController extends Controller
 
     public function getRequireData()
     {
-        $users = User::select('id', 'name')->get();
-        $projects = Project::select('id', 'name')->get();
-
+        $backend = env('DB_CONNECTION');
+        if ($backend === 'mysql') {
+            $users = User::select('id', 'name')->get();
+            $projects = Project::select('id', 'name')->get();
+        } 
+        elseif ($backend === 'redmine') {
+        }
         return response()->json([
             'users' => $users,
-            'projects' => $projects
+             'projects' => $projects
         ]);
+        
     }
 
     /**
@@ -95,18 +110,17 @@ class TaskController extends Controller
     public function store(Request $request)
     {
         //
+        $backend = env('DB_CONNECTION');
         $request->validate([
             'title' => 'required',
             'description' => 'required',
         ]);
 
-        $request['status'] = 'new';
-        $request['priority'] = 'high';
-        $request['due_date'] = Date('Y-m-d');
-        $request['assignee_id'] = 1;
-        $request['project_id'] = 1;
-
-        $todo = Task::create($request->all());
+        if ($backend === 'mysql') {
+            $todo = Task::create($request->all());
+        } elseif ($backend === 'redmine') {
+            $todo = $this->createIssue($request);
+        }
         return response()->json($todo);
     }
 
@@ -140,7 +154,12 @@ class TaskController extends Controller
     public function destroy(string $id)
     {
         //
-        Task::where('id', $id)->delete();
+        $backend = env('DB_CONNECTION');
+        if ($backend === 'mysql') {
+            Task::where('id', $id)->delete();
+        } elseif ($backend === 'redmine') {
+            $todo = $this->deleteIssue($deleteIssue, $id);
+        }
         return response()->json('Task has been deleted successfully.');
     }
 }

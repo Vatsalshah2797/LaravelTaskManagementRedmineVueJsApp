@@ -20,13 +20,13 @@
                             Add Form
                             <div class="row mb-2">
                                 <div class="col">
-                                    <input type="text" placeholder="Task title..." class="form-control" aria-label="todo" aria-describedby="todo" v-model="this.issue.title" >
+                                    <input type="text" required="required" placeholder="Task title*..." class="form-control" aria-label="todo" aria-describedby="todo" v-model="this.issue.title" >
                                 </div>
                             </div>
 
                             <div class="row mb-2">
                                 <div class="col">
-                                    <textarea placeholder="Description..." class="form-control" aria-label="todo" aria-describedby="todo" v-model="this.issue.description" ></textarea>
+                                    <textarea required="required" placeholder="Description*..." class="form-control" aria-label="todo" aria-describedby="todo" v-model="this.issue.description" ></textarea>
                                 </div>
                             </div>
 
@@ -48,7 +48,7 @@
                                 <div class="col">
                                     <select class="form-select" aria-label="Select Assignee" v-model="this.issue.assignee_id" >
                                         <option disabled selected>Select Assignee</option>
-                                        <option v-for="(user,index) in users" :key="index" value="{{user.id}}" > {{ user.name }} </option>
+                                        <option v-for="(user,index) in users" :key="index" :value="user.id"> {{ user.name }} </option>
                                     </select>
                                 </div>
 
@@ -56,7 +56,7 @@
                                     <div class="input-group">
                                         <select  class="form-select" aria-label="Select Project" v-model="this.issue.project_id" >
                                             <option selected value="">Select Project</option>
-                                            <option v-for="(project,index) in projects" :key="index" value="{{project.id}}" > {{ project.name }} </option>
+                                            <option v-for="(project,index) in projects" :key="index" :value="project.id"> {{ project.name }} </option>
                                         </select>
                                     </div>
                                 </div>
@@ -116,6 +116,7 @@
     </div>
 </template>
 
+
 <script>
     export default {
         //Declare Variable
@@ -149,10 +150,10 @@
             //For display drop down fetch data from database
             fetchInitialData() {
                 this.axios.get(this.api+'/get-require-data').then((response) => {
-                        if (response.data.length > 0) {
+                        //if (response.data.length > 0) {
                             this.users = response.data.users;
                             this.projects = response.data.projects;
-                        }
+                        //}
                     });
             },
             //For fetch all tasks

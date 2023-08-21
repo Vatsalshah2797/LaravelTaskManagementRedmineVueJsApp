@@ -84,9 +84,8 @@ trait CommonTrait
         $data = [
             'issue' => [
                 'project_id' => $request->input('project_id'),
-                'subject' => $request->input('subject'),
+                'subject' => $request->input('title'),
                 'description' => $request->input('description'),
-                // Additional fields as needed
             ],
         ];
 
